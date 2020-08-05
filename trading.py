@@ -3,6 +3,9 @@ import json
 import yfinance as yf
 import asyncio
 import os
+import random
+import time
+
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
@@ -76,6 +79,7 @@ api = tradeapi.REST(alpacaPaperApiKeyID, alpacaPaperSecretKey, base_url=paperBas
                     {
                     call sell worker("tkr","max")
                     }
+        
         
         
         
@@ -181,6 +185,36 @@ def set_buying_power():
     account = api.get_account()
     current_equity = account.buying_power
     print("Buying power: $" + account.buying_power)
+
+
+async def buying_worker(tkr,period,interval):
+    while True:
+        tkrdata = yf.download(tkr,period=period,interval=interval)
+        tkrdata['RSI'] = computeRSI(tkrdata['Adj Close'], 14)
+        #if tkrdataRSI < 20%:
+            #check MACD if last signal is buy:
+                #caluclate 5% of equity
+                #transalte to shares
+                #grab lock for equity
+                    #await submit albaca order
+                        #if failed:
+                            #unlcok
+                            #continue:
+                # update equity
+                #unlock
+                #call selling_worker(tkr)
+                #break
+
+
+async def selling_worker(tkr,period,interval):
+    while True:
+        tkrdata = yf.download(tkr, period=period, interval=interval)
+        tkrdata['RSI'] = computeRSI(tkrdata['Adj Close'], 14)
+        #if tkrdataRSI >
+
+
+
+
 
 
 set_buying_power()
