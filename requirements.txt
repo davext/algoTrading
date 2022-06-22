@@ -8,7 +8,7 @@ chardet==3.0.4
 idna==2.10
 multidict==4.7.6
 multitasking==0.0.9
-numpy==1.19.1
+numpy==1.22.0
 pandas==1.1.0
 python-dateutil==2.8.1
 python-dotenv==0.14.0
